@@ -391,7 +391,6 @@ export default function Tasks({ isDark }) {
               </tbody>
             </table>
           </div>
-        </div>
       ) : (
         /* ===== KANBAN VIEW WITH DRAG AND DROP ===== */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -330,7 +330,6 @@ export default function CRM() {
             </tbody>
           </table>
         </div>
-      </div>
 
       <Modal
         isOpen={showModal}

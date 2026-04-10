@@ -441,7 +441,6 @@ export default function Payments() {
               </tbody>
             </table>
           </div>
-        </div>
       )}
 
       {/* Clients Without Payment Records */}
