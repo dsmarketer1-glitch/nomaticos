@@ -489,7 +489,7 @@ export default function CRM() {
                 <div className="flex items-center gap-4">
                   <input type="file" accept=".pdf,.ppt,.pptx,.doc,.docx" onChange={e => handleFileUpload(e, 'proposal_url')} className="block w-full text-xs text-muted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-white/5 file:text-white hover:file:bg-white/10" />
                   {form.proposal_url && (
-                    <a href={`http://localhost:3001${form.proposal_url}`} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-accent hover:underline shrink-0">View Current</a>
+                    <a href={form.proposal_url.startsWith('http') ? form.proposal_url : `http://localhost:3001${form.proposal_url}`} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-accent hover:underline shrink-0">View Current</a>
                   )}
                 </div>
               </div>
@@ -498,7 +498,7 @@ export default function CRM() {
                 <div className="flex items-center gap-4">
                   <input type="file" accept=".xls,.xlsx" onChange={e => handleFileUpload(e, 'action_plan_url')} className="block w-full text-xs text-muted file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-white/5 file:text-white hover:file:bg-white/10" />
                   {form.action_plan_url && (
-                    <a href={`http://localhost:3001${form.action_plan_url}`} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-accent hover:underline shrink-0">View Current</a>
+                    <a href={form.action_plan_url.startsWith('http') ? form.action_plan_url : `http://localhost:3001${form.action_plan_url}`} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-accent hover:underline shrink-0">View Current</a>
                   )}
                 </div>
               </div>
