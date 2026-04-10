@@ -11,15 +11,17 @@ const navItems = [
   { to: '/settings', label: 'Settings' },
 ];
 
-export default function Sidebar({ isDark, toggleTheme, clientCount = 0, taskCount = 0 }) {
+export default function Sidebar({ isDark, toggleTheme, clientCount = 0, taskCount = 0, isOpen, onClose }) {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[220px] flex flex-col border-r z-50 transition-theme"
+    <aside className={`fixed left-0 top-0 h-screen w-[220px] flex flex-col border-r z-50 transition-all duration-300 ease-in-out lg:translate-x-0 ${
+        isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
+      }`}
       style={{
         backgroundColor: 'var(--bg-surface)',
         borderColor: 'var(--border-default)',
       }}>
-      {/* Logo */}
-      <div className="px-5 pt-7 pb-4">
+      {/* Logo & Close */}
+      <div className="px-5 pt-7 pb-4 flex items-center justify-between">
         <div className="flex items-center gap-3 mb-1">
           <img src="/logo.png" alt="NAD Logo" className="w-10 h-10 object-contain rounded-lg" />
           <div className="flex flex-col">
@@ -32,6 +34,12 @@ export default function Sidebar({ isDark, toggleTheme, clientCount = 0, taskCoun
             </p>
           </div>
         </div>
+        
+        <button onClick={onClose} className="lg:hidden p-2 text-secondary hover:text-primary transition-colors">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       {/* Navigation */}
@@ -41,10 +49,13 @@ export default function Sidebar({ isDark, toggleTheme, clientCount = 0, taskCoun
             key={item.to}
             to={item.to}
             end={item.to === '/'}
+            onClick={() => {
+              if (window.innerWidth < 1024) onClose();
+            }}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-input text-sm font-medium mb-1 transition-all duration-200 ${
                 isActive
-                  ? 'bg-amber-500/10 text-accent border-l-2 border-accent'
+                   ? 'bg-amber-500/10 text-accent border-l-2 border-accent'
                   : 'hover:bg-white/5 dark:hover:bg-white/5'
               }`
             }

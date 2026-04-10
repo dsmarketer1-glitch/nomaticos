@@ -273,11 +273,11 @@ Rules:
 
   return (
     <div className="animate-fadeIn">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <h1 className="font-head text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Clients</h1>
         <button
           onClick={() => { setFormError(''); setForm({ name: '', company: '', payout: '', payout_type: 'Monthly', location: '', website: '', services: [] }); setShowAddModal(true); }}
-          className="px-5 py-2.5 rounded-input text-sm font-semibold btn-press transition-colors"
+          className="w-full md:w-auto px-5 py-2.5 rounded-input text-sm font-semibold btn-press transition-colors"
           style={{ backgroundColor: 'var(--accent)', color: '#000' }}
           id="add-client-btn"
         >
@@ -289,7 +289,7 @@ Rules:
         <input
           type="text" placeholder="Search by name or company..." value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full max-w-[340px] px-4 py-2.5 rounded-input border text-sm transition-colors"
+          className="w-full md:max-w-[340px] px-4 py-2.5 rounded-input border text-sm transition-colors"
           style={{ backgroundColor: 'var(--bg-input)', borderColor: 'var(--border-default)', color: 'var(--text-primary)' }}
           id="client-search"
         />
@@ -324,7 +324,7 @@ Rules:
           )}
         </div>
       ) : (
-        <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredClients.map(client => {
             const progress = getChecklistProgress(client.checklist);
             return (

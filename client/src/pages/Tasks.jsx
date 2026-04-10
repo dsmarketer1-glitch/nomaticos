@@ -213,7 +213,7 @@ export default function Tasks({ isDark }) {
   return (
     <div className="animate-fadeIn">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5" style={{ position: 'sticky', top: 0, zIndex: 40, backgroundColor: 'var(--bg-primary)', paddingTop: '4px', paddingBottom: '12px' }}>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5" style={{ position: 'sticky', top: 0, zIndex: 40, backgroundColor: 'var(--bg-primary)', paddingTop: '4px', paddingBottom: '12px' }}>
         <h1 className="font-head text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Tasks</h1>
         <div className="flex items-center gap-3">
           <div className="flex rounded-input border overflow-hidden" style={{ borderColor: 'var(--border-default)' }}>
@@ -231,7 +231,7 @@ export default function Tasks({ isDark }) {
           <button
             onClick={openAddModal}
             id="add-task-btn"
-            className="px-5 py-2.5 rounded-input text-sm font-semibold btn-press"
+            className="flex-1 md:flex-none px-5 py-2.5 rounded-input text-sm font-semibold btn-press"
             style={{ backgroundColor: 'var(--accent)', color: '#000' }}
           >
             + Add Task
@@ -296,9 +296,8 @@ export default function Tasks({ isDark }) {
         </div>
       ) : view === 'table' ? (
         /* ===== TABLE VIEW ===== */
-        <div className="rounded-card border overflow-hidden" style={{ borderColor: 'var(--border-default)' }}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+        <div className="table-container">
+          <table className="w-full text-sm">
               <thead>
                 <tr style={{ backgroundColor: 'var(--bg-card)' }}>
                   {['Date', 'Client', 'Task', 'Category', 'Status', 'Remark', 'Actions'].map(h => (
@@ -395,7 +394,7 @@ export default function Tasks({ isDark }) {
         </div>
       ) : (
         /* ===== KANBAN VIEW WITH DRAG AND DROP ===== */
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {STATUSES.map(status => {
             const columnTasks = filteredTasks.filter(t => t.status === status);
             const isOver = dragOverColumn === status;

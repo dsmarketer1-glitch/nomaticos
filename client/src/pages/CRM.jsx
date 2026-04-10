@@ -186,8 +186,8 @@ export default function CRM() {
 
   return (
     <div className="animate-fadeIn">
-      <div className="flex items-center justify-between mb-6">
-        <div>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+        <div className="w-full md:w-auto">
           <h1 className="font-head text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>CRM & Pipeline</h1>
           <div className="flex gap-4 mt-2">
             <button 
@@ -204,27 +204,27 @@ export default function CRM() {
             </button>
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
           {view === 'pipeline' ? (
-            <div className="px-4 py-2 rounded-card border text-right" style={{ backgroundColor: 'rgba(245,158,11,0.05)', borderColor: 'var(--accent)' }}>
+            <div className="px-4 py-2 rounded-card border text-right flex-1 sm:flex-none" style={{ backgroundColor: 'rgba(245,158,11,0.05)', borderColor: 'var(--accent)' }}>
               <div className="text-[10px] font-bold uppercase tracking-wider text-muted">Total Pipeline</div>
               <div className="text-lg font-bold" style={{ color: 'var(--accent)' }}>{currency}{totalPipeline.toLocaleString('en-IN')}</div>
             </div>
           ) : (
-            <div className="flex gap-3">
-              <div className="px-4 py-2 rounded-card border text-right" style={{ backgroundColor: 'rgba(16,185,129,0.05)', borderColor: 'var(--green)' }}>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-muted">Closed this Month</div>
+            <div className="flex gap-3 flex-1 sm:flex-none">
+              <div className="px-4 py-2 rounded-card border text-right flex-1" style={{ backgroundColor: 'rgba(16,185,129,0.05)', borderColor: 'var(--green)' }}>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted">Closed</div>
                 <div className="text-lg font-bold" style={{ color: 'var(--green)' }}>{thisMonthMetrics.count} <span className="text-xs font-normal opacity-60">Deals</span></div>
               </div>
-              <div className="px-4 py-2 rounded-card border text-right" style={{ backgroundColor: 'rgba(16,185,129,0.05)', borderColor: 'var(--green)' }}>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-muted">Amount this Month</div>
+              <div className="px-4 py-2 rounded-card border text-right flex-1" style={{ backgroundColor: 'rgba(16,185,129,0.05)', borderColor: 'var(--green)' }}>
+                <div className="text-[10px] font-bold uppercase tracking-wider text-muted">Month Amt</div>
                 <div className="text-lg font-bold" style={{ color: 'var(--green)' }}>{currency}{thisMonthMetrics.amount.toLocaleString('en-IN')}</div>
               </div>
             </div>
           )}
           <button
             onClick={openAddModal}
-            className="px-5 py-2.5 rounded-input text-sm font-semibold btn-press flex items-center gap-2"
+            className="px-5 py-2.5 rounded-input text-sm font-semibold btn-press flex items-center justify-center gap-2"
             style={{ backgroundColor: 'var(--accent)', color: '#000' }}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -235,9 +235,8 @@ export default function CRM() {
         </div>
       </div>
 
-      <div className="rounded-card border overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-default)' }}>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+      <div className="table-container">
+        <table className="w-full text-sm">
             <thead>
               <tr style={{ backgroundColor: 'rgba(255,255,255,0.02)' }}>
                 <th className="px-4 py-3 text-left text-xs font-semibold" style={{ color: 'var(--text-muted)', borderBottom: '1px solid var(--border-default)' }}>Lead Name</th>
@@ -365,7 +364,7 @@ export default function CRM() {
 
         <div className="space-y-6 overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
           {activeTab === 'basic' && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="col-span-1">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-muted mb-2">Lead Name *</label>
                 <input value={form.client_name} onChange={e => setForm({...form, client_name: e.target.value})} className="w-full px-3 py-2 bg-[#1a1b1e] border border-white/5 rounded-md focus:border-accent/50 outline-none transition-all" />
@@ -456,7 +455,7 @@ export default function CRM() {
           )}
 
           {activeTab === 'status' && (
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="col-span-1">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-muted mb-2">Status</label>
                 <select value={form.status} onChange={e => setForm({...form, status: e.target.value})} className="w-full px-3 py-2 bg-[#1a1b1e] border border-white/5 rounded-md focus:border-accent/50 outline-none transition-all">

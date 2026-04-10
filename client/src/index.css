@@ -159,6 +159,25 @@ body {
   box-shadow: 0 6px 28px rgba(245, 158, 11, 0.4);
 }
 
+/* ===== Layout Utilities ===== */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+  border: 1px solid var(--border-default);
+}
+
+.table-container table {
+  min-width: 800px;
+}
+
+@media (max-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ===== Selection ===== */
 ::selection {
   background: rgba(245, 158, 11, 0.3);

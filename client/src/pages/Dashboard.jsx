@@ -142,12 +142,12 @@ export default function Dashboard() {
   return (
     <div className="animate-fadeIn pb-10">
       {/* Header & Date Selector */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
         <div>
-          <h1 className="font-head text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="font-head text-2xl md:text-3xl font-bold tracking-tight" style={{ color: 'var(--text-primary)' }}>
             {getGreeting()}, {userName}
           </h1>
-          <div className="flex items-center gap-4 mt-2">
+          <div className="flex flex-wrap items-center gap-4 mt-2">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 border border-white/10">
               <span className="text-[10px] font-bold uppercase text-muted">Range:</span>
               <input 
@@ -166,21 +166,21 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button onClick={handleEnableNotifications} className="px-5 py-2.5 rounded-input text-xs font-bold uppercase tracking-widest bg-blue/10 border border-blue/20 hover:bg-blue/20 text-blue transition-all">
+        <div className="flex flex-wrap items-center gap-3">
+          <button onClick={handleEnableNotifications} className="flex-1 lg:flex-none px-4 py-2.5 rounded-input text-[10px] font-bold uppercase tracking-widest bg-blue/10 border border-blue/20 hover:bg-blue/20 text-blue transition-all whitespace-nowrap">
             🔔 Enable Notifications
           </button>
-          <button onClick={() => setShowGoalModal(true)} className="px-5 py-2.5 rounded-input text-xs font-bold uppercase tracking-widest bg-white/5 border border-white/10 hover:bg-white/10 transition-all">
-            Set Monthly Goal
+          <button onClick={() => setShowGoalModal(true)} className="flex-1 lg:flex-none px-4 py-2.5 rounded-input text-[10px] font-bold uppercase tracking-widest bg-white/5 border border-white/10 hover:bg-white/10 transition-all whitespace-nowrap">
+            Set Goal
           </button>
-          <button onClick={() => navigate('/crm')} className="px-5 py-2.5 rounded-input text-xs font-bold uppercase tracking-widest bg-accent text-black transition-all">
-            Leads Detail
+          <button onClick={() => navigate('/crm')} className="flex-1 lg:flex-none px-4 py-2.5 rounded-input text-[10px] font-bold uppercase tracking-widest bg-accent text-black transition-all">
+            Leads
           </button>
         </div>
       </div>
 
       {/* Main Stats Grid */}
-      <div className="grid grid-cols-4 gap-5 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <div className="p-6 rounded-2xl border border-white/5 glass-card" style={{ backgroundColor: 'var(--bg-card)' }}>
           <div className="text-[10px] font-bold uppercase tracking-widest text-muted mb-2">Revenue in Range</div>
           <div className="text-2xl font-head font-bold text-accent">{currency}{revenueInRange.toLocaleString('en-IN')}</div>
@@ -215,7 +215,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         {/* Revenue Velocity Chart */}
         <div className="col-span-2 rounded-2xl border p-6 border-white/5 bg-card">
           <div className="flex items-center justify-between mb-6">
@@ -260,7 +260,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Goal Activities */}
         <div className="p-6 rounded-2xl border border-white/5 bg-card overflow-hidden">
           <div className="flex items-center justify-between mb-4">

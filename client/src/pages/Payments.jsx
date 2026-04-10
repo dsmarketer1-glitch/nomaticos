@@ -233,11 +233,11 @@ export default function Payments() {
   return (
     <div className="animate-fadeIn">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <h1 className="font-head text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Payments</h1>
         <button
           onClick={() => { setAddError(''); setAddForm({ client_id: '', amount: '' }); setShowAddModal(true); }}
-          className="px-5 py-2.5 rounded-input text-sm font-semibold btn-press"
+          className="w-full md:w-auto px-5 py-2.5 rounded-input text-sm font-semibold btn-press"
           style={{ backgroundColor: 'var(--accent)', color: '#000' }}
           id="add-payment-btn"
         >
@@ -268,7 +268,7 @@ export default function Payments() {
       )}
 
       {/* Stats Row */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {[
           { label: 'Total Expected', value: `${currency}${totalExpected.toLocaleString('en-IN')}`, color: 'var(--accent)' },
           { label: 'Total Received', value: `${currency}${totalReceived.toLocaleString('en-IN')}`, color: 'var(--green)' },
@@ -301,9 +301,8 @@ export default function Payments() {
           </button>
         </div>
       ) : (
-        <div className="rounded-card border overflow-hidden" style={{ borderColor: 'var(--border-default)' }}>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+        <div className="table-container">
+          <table className="w-full text-sm">
               <thead>
                 <tr style={{ backgroundColor: 'var(--bg-card)' }}>
                   {['Client', 'Amount', 'Last Payment', 'Next Due', 'Invoice Sent', 'Payment Received', 'Status', 'Actions'].map(h => (

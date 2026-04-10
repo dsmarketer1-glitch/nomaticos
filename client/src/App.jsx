@@ -26,6 +26,7 @@ function AuthenticatedApp() {
   const { user } = useUser();
   const [clientCount, setClientCount] = useState(0);
   const [openTaskCount, setOpenTaskCount] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showEOD, setShowEOD] = useState(false);
 
   const userEmail = user?.primaryEmailAddress?.emailAddress;
@@ -59,41 +60,73 @@ function AuthenticatedApp() {
   }
 
   return (
-    <div className="flex min-h-screen transition-theme" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="flex min-h-screen transition-theme overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm animate-fadeIn"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <Sidebar
         isDark={isDark}
         toggleTheme={toggleTheme}
         clientCount={clientCount}
         taskCount={openTaskCount}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
       />
 
-      <main className="flex-1 ml-[220px]" style={{ padding: '28px 32px' }}>
-        <div className="flex justify-end p-2 absolute top-4 right-8 z-50">
-           <UserButton />
-        </div>
-        <Routes>
-          <Route path="/" element={<Dashboard isDark={isDark} />} />
-          <Route path="/clients" element={<Clients isDark={isDark} />} />
-          <Route path="/tasks" element={<Tasks isDark={isDark} />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/hours-tracking" element={<HoursTracking isDark={isDark} />} />
-          <Route path="/crm" element={<CRM isDark={isDark} />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Mobile Header */}
+        <header className="lg:hidden flex items-center justify-between px-4 py-4 border-b transition-theme z-30"
+          style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-default)' }}>
+          <button 
+            onClick={() => setIsSidebarOpen(true)}
+            className="p-2 -ml-2 text-secondary hover:text-primary transition-colors"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Logo" className="w-8 h-8 rounded" />
+            <span className="font-bold text-accent">Nomatic OS</span>
+          </div>
+
+          <UserButton />
+        </header>
+
+        <main className="flex-1 lg:ml-[220px] relative min-w-0" style={{ padding: 'max(20px, 4vh) max(16px, 3vw)' }}>
+          <div className="hidden lg:flex justify-end p-2 absolute top-4 right-8 z-50">
+             <UserButton />
+          </div>
+          <Routes>
+            <Route path="/" element={<Dashboard isDark={isDark} />} />
+            <Route path="/clients" element={<Clients isDark={isDark} />} />
+            <Route path="/tasks" element={<Tasks isDark={isDark} />} />
+            <Route path="/payments" element={<Payments />} />
+            <Route path="/hours-tracking" element={<HoursTracking isDark={isDark} />} />
+            <Route path="/crm" element={<CRM isDark={isDark} />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
 
       <button
         onClick={() => setShowEOD(true)}
-        className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-full text-sm font-semibold eod-btn btn-press"
+        className="fixed bottom-6 right-6 z-50 px-5 py-3 rounded-full text-sm font-semibold eod-btn btn-press shadow-xl"
         style={{
           background: 'linear-gradient(135deg, #f59e0b, #ea580c)',
           color: '#fff',
-          boxShadow: '0 4px 20px rgba(245, 158, 11, 0.35)',
         }}
         id="eod-btn"
       >
-        Finish the Day
+        <span className="hidden md:inline">Finish the Day</span>
+        <span className="md:hidden">EOD</span>
       </button>
 
       <EODModal isOpen={showEOD} onClose={() => setShowEOD(false)} isDark={isDark} />
