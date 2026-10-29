@@ -1,7 +1,20 @@
 import { supabase } from './supabase';
 
 // Helper to get active user ID (placeholder for now, will be updated during Clerk integration)
-const getUserId = () => 'ds.marketer1@gmail.com'; 
+const getUserId = () => 'ds.marketer1@gmail.com';
+
+// Supabase caps each response at 1000 rows, so page through until we have everything.
+// `buildQuery` must return a fresh query each call (builders can't be reused).
+const PAGE_SIZE = 1000;
+const fetchAll = async (buildQuery) => {
+  const rows = [];
+  for (let from = 0; ; from += PAGE_SIZE) {
+    const { data, error } = await buildQuery().range(from, from + PAGE_SIZE - 1);
+    if (error) throw error;
+    rows.push(...(data || []));
+    if (!data || data.length < PAGE_SIZE) return rows;
+  }
+};
 
 // ===== Clients =====
 export const getClients = async () => {
@@ -55,18 +68,19 @@ export const deleteClient = async (id) => {
 
 // ===== Tasks =====
 export const getTasks = async (params = {}) => {
-  let query = supabase
-    .from('tasks')
-    .select('*')
-    .eq('user_id', getUserId());
+  return fetchAll(() => {
+    let query = supabase
+      .from('tasks')
+      .select('*')
+      .eq('user_id', getUserId());
 
-  if (params.client_id) query = query.eq('client_id', params.client_id);
-  if (params.status) query = query.eq('status', params.status);
-  if (params.date) query = query.eq('date', params.date);
+    if (params.client_id) query = query.eq('client_id', params.client_id);
+    if (params.status) query = query.eq('status', params.status);
+    if (params.date) query = query.eq('date', params.date);
 
-  const { data, error } = await query.order('date', { ascending: true });
-  if (error) throw error;
-  return data;
+    // id tie-breaker keeps page boundaries stable
+    return query.order('date', { ascending: true }).order('created_at', { ascending: true }).order('id');
+  });
 };
 
 export const createTask = async (data) => {
